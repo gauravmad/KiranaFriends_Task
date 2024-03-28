@@ -24,7 +24,7 @@ export default function MainScreen() {
       return 0.0;
     }
     const totalSales = salesData.reduce((total, item) => total + item.salesAmount, 0);
-    return (totalSales / salesData.length.toFixed(0));
+    return (totalSales / salesData.length.toFixed(2));
   };
 
   const salesPerSqFt = () => {
