@@ -17,7 +17,7 @@ import { useData } from "../context/DataContext";
 export default function AddDataScreen() {
   const navigation = useNavigation();
 
-  const {addSalesData}= useData();
+  const { addSalesData } = useData();
 
   const [date, setDate] = useState("");
   const [salesAmount, setSalesAmount] = useState("");
@@ -29,12 +29,18 @@ export default function AddDataScreen() {
   const handleTotalBillsChange = (text) => setTotalBills(text);
   const handleStoreSizeChange = (text) => setStoreSize(text);
 
-  const handleAddData = () =>{
-    const newData = { date, salesAmount: parseFloat(salesAmount) }; // Assuming salesAmount is a number
+  const handleAddData = () => {
+    const newData = { 
+      date, 
+      salesAmount: parseFloat(salesAmount),
+      totalBills:parseFloat(totalBills),
+      storeSize:parseFloat(storeSize)
+    }; 
     addSalesData(newData);
-    setSalesAmount('');
-    setDate('');
-  }
+    setSalesAmount("");
+    setDate("");
+    navigation.navigate(MainScreen);
+  };
 
   return (
     <View className="bg-white h-full">
@@ -82,7 +88,10 @@ export default function AddDataScreen() {
               onChangeText={handleStoreSizeChange}
             />
 
-            <TouchableOpacity onPress={handleAddData} className="bg-orange-600 p-[1vh] rounded-xl text-white my-[2vh]">
+            <TouchableOpacity
+              onPress={handleAddData}
+              className="bg-orange-600 p-[1vh] rounded-xl text-white my-[2vh]"
+            >
               <Text className="text-[2.7vh] text-center text-white font-semibold">
                 Add
               </Text>
