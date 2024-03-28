@@ -11,9 +11,13 @@ import { useNavigation } from "@react-navigation/native";
 
 import AddDataScreen from "./AddDataScreen";
 import CustomInput from "../components/CusotmInput";
+import BillsGraphReport from "../components/BillsGraphReport";
+import SalesGraphReport from "../components/SalesGraphReport";
+import { useData } from "../context/DataContext";
 
 export default function MainScreen() {
   const navigation = useNavigation();
+  const { salesData } = useData();
 
   return (
     <View className="bg-white h-full">
@@ -32,37 +36,45 @@ export default function MainScreen() {
         </Text>
       </View>
 
-      <View
-        style={styles.header2}
-        className="w-[90%] mx-auto my-[2vh] p-[1.5vh] rounded-lg"
-      >
-        <Text className="text-[2.4vh] font-semibold my-[2vh]">
-          Current Month KPI Summary
-        </Text>
-        
-        <View className="flex flex-row justify-between ">
-          <View className="w-[30%]">
-            <Text className="text-[3.6vh] font-bold text-[#23CDD6]">0.0</Text>
-            <Text className="text-[2vh] font-semibold">
-              Average Daily Sales
-            </Text>
-          </View>
-          <View className="w-[30%]">
-            <Text className="text-[3.6vh] font-bold text-[#E83F94]">0.0</Text>
-            <Text className="text-[2vh] font-semibold">
-              Average Bill Values
-            </Text>
-          </View>
-          <View className="w-[30%]">
-            <Text className="text-[3.6vh] font-bold text-[#8366FF]">0.0</Text>
-            <Text className="text-[2vh] font-semibold">Settles per Sq. Ft</Text>
+      <ScrollView>
+        <View
+          style={styles.header2}
+          className="w-[90%] mx-auto my-[2vh] p-[1.5vh] rounded-lg"
+        >
+          <Text className="text-[2.4vh] font-semibold my-[2vh]">
+            Current Month KPI Summary
+          </Text>
+
+          <View className="flex flex-row justify-between ">
+            <View className="w-[30%]">
+              <Text className="text-[3.6vh] font-bold text-[#23CDD6]">0.0</Text>
+              <Text className="text-[2vh] font-semibold">
+                Average Daily Sales
+              </Text>
+            </View>
+            <View className="w-[30%]">
+              <Text className="text-[3.6vh] font-bold text-[#E83F94]">0.0</Text>
+              <Text className="text-[2vh] font-semibold">
+                Average Bill Values
+              </Text>
+            </View>
+            <View className="w-[30%]">
+              <Text className="text-[3.6vh] font-bold text-[#8366FF]">0.0</Text>
+              <Text className="text-[2vh] font-semibold">
+                Settles per Sq. Ft
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate(AddDataScreen)}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate(AddDataScreen)}>
         <Text>Add Bills</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+        <View className="w-[90%] mx-auto">
+          <BillsGraphReport />
+          <SalesGraphReport data={salesData} />
+        </View>
+      </ScrollView>
     </View>
   );
 }

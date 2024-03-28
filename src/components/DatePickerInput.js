@@ -25,6 +25,7 @@ export default function DatePickerInput({ label, placeholdertext }) {
           {label}
         </Text>
 
+
         <TouchableOpacity onPress={showDatePicker} className="border-b-2 border-[#BDC0CE] flex flex-row justify-between w-full">
           <TextInput
             className="w-[90%] no-underline focus:text-[#111] text-[2.5vh] py-[0.5vh]"

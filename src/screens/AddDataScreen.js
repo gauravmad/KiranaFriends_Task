@@ -12,9 +12,12 @@ import { useNavigation } from "@react-navigation/native";
 import MainScreen from "./MainScreen";
 import CustomInput from "../components/CusotmInput";
 import DatePickerInput from "../components/DatePickerInput";
+import { useData } from "../context/DataContext";
 
 export default function AddDataScreen() {
   const navigation = useNavigation();
+
+  const {addSalesData}= useData();
 
   const [date, setDate] = useState("");
   const [salesAmount, setSalesAmount] = useState("");
@@ -25,6 +28,13 @@ export default function AddDataScreen() {
   const handleSalesAmountChange = (text) => setSalesAmount(text);
   const handleTotalBillsChange = (text) => setTotalBills(text);
   const handleStoreSizeChange = (text) => setStoreSize(text);
+
+  const handleAddData = () =>{
+    const newData = { date, salesAmount: parseFloat(salesAmount) }; // Assuming salesAmount is a number
+    addSalesData(newData);
+    setSalesAmount('');
+    setDate('');
+  }
 
   return (
     <View className="bg-white h-full">
@@ -72,7 +82,7 @@ export default function AddDataScreen() {
               onChangeText={handleStoreSizeChange}
             />
 
-            <TouchableOpacity className="bg-orange-600 p-[1vh] rounded-xl text-white my-[2vh]">
+            <TouchableOpacity onPress={handleAddData} className="bg-orange-600 p-[1vh] rounded-xl text-white my-[2vh]">
               <Text className="text-[2.7vh] text-center text-white font-semibold">
                 Add
               </Text>

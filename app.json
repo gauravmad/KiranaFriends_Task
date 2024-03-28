@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "bunchup-app",
-    "slug": "bunchup-app",
+    "name": "kiranafriends",
+    "slug": "kiranafriends",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
