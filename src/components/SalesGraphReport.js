@@ -6,12 +6,10 @@ import AddDataScreen from "../screens/AddDataScreen";
 import { useData } from "../context/DataContext";
 
 export default function SalesGraphReport() {
-
   const navigation = useNavigation();
   const { salesData } = useData();
 
   if (salesData.length === 0) {
-
     return (
       <View
         style={styles.header}
@@ -19,7 +17,7 @@ export default function SalesGraphReport() {
       >
         <View className="relative">
           <Text className="absolute z-20 text-[2.2vh] font-semibold left-[2.7vh] top-[2vh]">
-            Daily Sales
+            Daily Bills
           </Text>
           <Text className="absolute z-20 right-[2.7vh] top-[2vh]">
             Show data: <Text className="font-medium">This Week</Text>
@@ -34,7 +32,7 @@ export default function SalesGraphReport() {
           onPress={() => navigation.navigate(AddDataScreen)}
         >
           <Text className="text-center text-[2.5vh] font-medium text-white">
-            Add Daily Sales
+            Add Daily Bills
           </Text>
         </TouchableOpacity>
       </View>
@@ -54,37 +52,46 @@ export default function SalesGraphReport() {
 
   return (
     <>
-      <View className="w-[100%] flex flex-col justify-end bg-slate-100 h-[35vh] my-[3vh]">
+      <View style={styles.header} className="w-[100%] my-[2vh] flex flex-col justify-end bg-slate-100 py-[2vh]">
+        <View className="w-[90%] mx-auto flex flex-row justify-between items-center">
+          <Text className="text-[2.2vh] text-pink-800 font-medium">
+            Daily Bills
+          </Text>
+          <Text className="text-[2vh] ">
+            Show data: <Text className="font-medium text-pink-600">This Week</Text>
+          </Text>
+        </View>
+          
         <View>
-        <LineChart
-        data={data}
-        width={300}
-        height={200}
-        yAxisSuffix="k"
-        yAxisInterval={1}
-        chartConfig={{
-          backgroundColor: "#111",
-          backgroundGradientFrom: "#111",
-          backgroundGradientTo: "#7E001F",
-          decimalPlaces: 2,
-          color: (opacity = 1) => `rgba(255, 85, 127, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          propsForDots: {
-            r: "6",
-            strokeWidth: "2",
-            stroke: "#fff",
-          },
-          formatYLabel: (value) => `₹${value}`,
-          formatXLabel: (value) => {
-            const date = new Date(value);
-            return `${
-              date.getMonth() + 1
-            }/${date.getDate()}/${date.getFullYear()}`;
-          },
-        }}
-        bezier
-        className="mx-auto rounded-xl my-[1vh] p-[1vh]"
-      />
+          <LineChart
+            data={data}
+            width={300}
+            height={200}
+            yAxisSuffix=""
+            yAxisInterval={1}
+            chartConfig={{
+              backgroundColor: "#111",
+              backgroundGradientFrom: "#111",
+              backgroundGradientTo: "#7E001F",
+              decimalPlaces: 0,
+              color: (opacity = 1) => `rgba(255, 85, 127, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              propsForDots: {
+                r: "6",
+                strokeWidth: "2",
+                stroke: "#fff",
+              },
+              formatYLabel: (value) => `₹${value}`,
+              formatXLabel: (value) => {
+                const date = new Date(value);
+                return `${
+                  date.getMonth() + 1
+                }/${date.getDate()}/${date.getFullYear()}`;
+              },
+            }}
+            bezier
+            className="mx-auto rounded-xl my-[1vh] p-[1vh]"
+          />
         </View>
 
         <TouchableOpacity
@@ -92,15 +99,13 @@ export default function SalesGraphReport() {
           onPress={() => navigation.navigate(AddDataScreen)}
         >
           <Text className="text-center text-[2.5vh] text-white">
-            Add Daily Sales
+            Add Daily Bills
           </Text>
         </TouchableOpacity>
       </View>
     </>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   header: {

@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-
 import AddDataScreen from "./AddDataScreen";
 import CustomInput from "../components/CusotmInput";
 import BillsGraphReport from "../components/BillsGraphReport";
@@ -16,8 +15,34 @@ import SalesGraphReport from "../components/SalesGraphReport";
 import { useData } from "../context/DataContext";
 
 export default function MainScreen() {
+
   const navigation = useNavigation();
   const { salesData } = useData();
+
+  const averageDailySales = () => {
+    if (salesData.length === 0) {
+      return 0.0;
+    }
+    const totalSales = salesData.reduce((total, item) => total + item.salesAmount, 0);
+    return (totalSales / salesData.length.toFixed(0));
+  };
+
+  const salesPerSqFt = () => {
+    if (salesData.length === 0) {
+      return 0.0;
+    }
+    const totalStoreSize = salesData.reduce((total, item) => total + item.storeSize, 0);
+    return (averageDailySales() / totalStoreSize).toFixed(2);
+  };
+
+  const averageBillValue = () => {
+    if (salesData.length === 0) {
+      return 0.0;
+    }
+    const totalBills = salesData.reduce((total, item) => total + item.totalBills, 0);
+    return (averageDailySales() / totalBills).toFixed(2);
+  };
+
 
   return (
     <View className="bg-white h-full">
@@ -47,19 +72,19 @@ export default function MainScreen() {
 
           <View className="flex flex-row justify-between ">
             <View className="w-[30%]">
-              <Text className="text-[3.6vh] font-bold text-[#23CDD6]">0.0</Text>
+              <Text className="text-[3.6vh] font-bold text-[#23CDD6]">{averageDailySales()}</Text>
               <Text className="text-[2vh] font-semibold">
                 Average Daily Sales
               </Text>
             </View>
             <View className="w-[30%]">
-              <Text className="text-[3.6vh] font-bold text-[#E83F94]">0.0</Text>
+              <Text className="text-[3.6vh] font-bold text-[#E83F94]">{averageBillValue()}</Text>
               <Text className="text-[2vh] font-semibold">
                 Average Bill Values
               </Text>
             </View>
             <View className="w-[30%]">
-              <Text className="text-[3.6vh] font-bold text-[#8366FF]">0.0</Text>
+              <Text className="text-[3.6vh] font-bold text-[#8366FF]">{salesPerSqFt()}</Text>
               <Text className="text-[2vh] font-semibold">
                 Settles per Sq. Ft
               </Text>
@@ -67,9 +92,6 @@ export default function MainScreen() {
           </View>
         </View>
 
-        {/* <TouchableOpacity onPress={() => navigation.navigate(AddDataScreen)}>
-        <Text>Add Bills</Text>
-      </TouchableOpacity> */}
         <View className="w-[90%] mx-auto">
           <BillsGraphReport />
           <SalesGraphReport data={salesData} />

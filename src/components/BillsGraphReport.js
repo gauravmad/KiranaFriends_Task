@@ -53,20 +53,37 @@ export default function BillsGraphReport() {
 
   console.log("Chart Data:", data);
 
+  const formatYLabel = (value) => {
+    if (Math.abs(value) >= 1.0e6) {
+      return `${(value / 1.0e6).toFixed(1)}M`;
+    } else if (Math.abs(value) >= 1.0e3) {
+      return `${(value / 1.0e3).toFixed(1)}k`;
+    }
+    return value.toString(); // No formatting needed for smaller values
+  };
+
   return (
     // <>
-    <View className="w-[100%] flex flex-col justify-end bg-slate-100 pb-[2vh]">
+    <View style={styles.header} className="w-[100%] flex flex-col justify-end pb-[2vh] py-[2vh]">
+      <View className="w-[90%] mx-auto flex flex-row justify-between items-center">
+          <Text className="text-[2.2vh] text-cyan-600 font-medium">
+            Daily Sales
+          </Text>
+          <Text className="text-[2vh] ">
+            Show data: <Text className="font-medium text-cyan-600">This Week</Text>
+          </Text>
+        </View>
       <LineChart
         data={data}
         width={300}
         height={200}
-        yAxisSuffix="k"
+        yAxisSuffix=""
         yAxisInterval={1}
         chartConfig={{
           backgroundColor: "#111",
           backgroundGradientFrom: "#111",
           backgroundGradientTo: "#006C76",
-          decimalPlaces: 2,
+          decimalPlaces: 0,
           color: (opacity = 1) => `rgba(12, 223, 239, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           propsForDots: {
@@ -74,7 +91,7 @@ export default function BillsGraphReport() {
             strokeWidth: "2",
             stroke: "#fff",
           },
-          formatYLabel: (value) => `₹${value}`,
+          formatYLabel: formatYLabel,
           formatXLabel: (value) => {
             const date = new Date(value);
             return `${
